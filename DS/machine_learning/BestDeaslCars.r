@@ -116,18 +116,6 @@ ggplot(subset(cars, !is.na(interiorColor)),
 # replace NA in interiorColor with Unknown
 cars$interiorColor[is.na(cars$interiorColor)] <- "Unknown"
 
-# Now analyze with the cleaned version
-ggplot(cars, aes(x = interiorColor_clean, fill = priceClassification)) +
-  geom_bar(position = "fill") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  labs(x = "Interior Color", 
-       y = "Proportion",
-       title = "Interior Color vs Price Classification (including Unknown)",
-       subtitle = "Proportional distribution")
-
-
-
 # Count NA values in each column
 na_counts <- sapply(cars, function(x) sum(is.na(x)))
 
@@ -158,11 +146,11 @@ ggplot(na_summary_with_na, aes(x = reorder(Column, NA_Count), y = NA_Count)) +
        title = "NA Values by Column")
 
 
-# Find the columns that are statistically relevant
+# Find the columns that are statistically relevant 
 # 1. For Numerical Variables - ANOVA test
 numerical_vars <- c("mileage", "listPrice", "monthlyPayment", 
-                   "mileageRatingCity", "mileageRatingHighway",
-                   "accidentN", "ownersN", "priceClassDiffAmt")
+                    "mileageRatingCity", "mileageRatingHighway",
+                    "accidentN", "ownersN", "priceClassDiffAmt")
 
 # Function to run ANOVA and return p-value
 anova_test <- function(var_name) {
@@ -180,18 +168,26 @@ numerical_results <- data.frame(
   })
 )
 
+# Remove mileageRatingCity and mileageRatingHighway from cars dataset
+cars <- cars %>% 
+  select(-mileageRatingCity, -mileageRatingHighway, -driveType, -style)
+
+# Verify the columns are removed
+print("Updated column names:")
+print(colnames(cars))
+
 # 2. For Categorical Variables - Chi-square test
 categorical_vars <- c("vehicleHistUseType", "transmissionType", 
-                     "fuelType", "driveType")
+                      "fuelType", "driveType")
 
 # Function to run Chi-square test and return p-value
 chi_square_test <- function(var_name) {
-  contingency_table <- table(relevant_cars[[var_name]], 
-                           relevant_cars$priceClassification)
-  test_result <- chisq.test(contingency_table)
+  contingency_table <- table(relevanncy_table)
   return(test_result$p.value)
 }
-
+t_cars[[var_name]], 
+                             relevant_cars$priceClassification)
+  test_result <- chisq.test(continge
 # Run Chi-square for each categorical variable
 categorical_results <- data.frame(
   Variable = categorical_vars,
@@ -200,11 +196,15 @@ categorical_results <- data.frame(
   })
 )
 
+# Remove transmissionType from cars dataset
+cars <- cars %>% 
+  select(-transmissionType)
+
 # 3. Combine and format results
 all_results <- rbind(numerical_results, categorical_results)
 all_results$Significant <- ifelse(all_results$P_Value < 0.05, "Yes", "No")
 all_results$Test_Type <- c(rep("ANOVA", length(numerical_vars)),
-                          rep("Chi-square", length(categorical_vars)))
+                           rep("Chi-square", length(categorical_vars)))
 all_results$P_Value <- round(all_results$P_Value, 4)
 
 # Sort by p-value
@@ -246,3 +246,4 @@ cat("2. Effect size interpretation:\n")
 cat("   - Small effect: η² ≈ 0.01\n")
 cat("   - Medium effect: η² ≈ 0.06\n")
 cat("   - Large effect: η² ≈ 0.14\n")
+
