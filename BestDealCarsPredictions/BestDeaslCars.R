@@ -471,3 +471,68 @@ legend("bottomright",
        col=c("blue", "red", "green"),
        lwd=2)
 
+# After all model comparisons and evaluations...
+
+# Choose the best model based on metrics (let's use all models for comparison)
+test_data$combined_score <- (
+  # Random Forest predictions
+  test_data$rf_excellent_prob * 1.0 + test_data$rf_great_prob * 0.7 +
+  # Decision Tree predictions
+  test_data$tree_excellent_prob * 1.0 + test_data$tree_great_prob * 0.7 +
+  # XGBoost predictions
+  test_data$xgb_excellent_prob * 1.0 + test_data$xgb_great_prob * 0.7
+) / 3  # Average across models
+
+# Find top 100 best deals
+top_deals <- test_data[order(test_data$combined_score, decreasing = TRUE), ][1:100, ]
+
+# Create detailed results dataframe
+results <- data.frame(
+  listPrice = top_deals$listPrice,
+  priceClassification = top_deals$priceClassification,
+  combined_score = top_deals$combined_score,
+  rf_excellent_prob = top_deals$rf_excellent_prob,
+  rf_great_prob = top_deals$rf_great_prob,
+  tree_excellent_prob = top_deals$tree_excellent_prob,
+  tree_great_prob = top_deals$tree_great_prob,
+  xgb_excellent_prob = top_deals$xgb_excellent_prob,
+  xgb_great_prob = top_deals$xgb_great_prob
+)
+
+# Print top 10 deals
+print("Top 10 Best Deals:")
+print(head(results, 10))
+
+# Save results
+write.csv(results, "top_100_deals.csv", row.names = FALSE)
+
+# Visualize distribution of scores in top deals
+ggplot(top_deals, aes(x = combined_score)) +
+  geom_histogram(bins = 20, fill = "blue", alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Distribution of Combined Scores in Top 100 Deals",
+       x = "Combined Score",
+       y = "Count")
+
+# Compare model predictions for top deals
+top_deals_long <- reshape2::melt(results[, c("rf_excellent_prob", 
+                                           "tree_excellent_prob", 
+                                           "xgb_excellent_prob")],
+                               variable.name = "model",
+                               value.name = "excellent_prob")
+
+ggplot(top_deals_long, aes(x = model, y = excellent_prob)) +
+  geom_boxplot(fill = "lightblue") +
+  theme_minimal() +
+  labs(title = "Model Predictions Comparison for Top 100 Deals",
+       x = "Model",
+       y = "Probability of Excellent Price")
+
+# Optional: Add price distribution visualization
+ggplot(top_deals, aes(x = listPrice)) +
+  geom_histogram(bins = 20, fill = "green", alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Price Distribution of Top 100 Deals",
+       x = "List Price",
+       y = "Count")
+
