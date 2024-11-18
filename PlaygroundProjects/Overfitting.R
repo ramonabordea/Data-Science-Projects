@@ -1,3 +1,4 @@
+#overfitt exemple
 library(ggplot2)
 
 # Create sample data
@@ -6,6 +7,7 @@ x <- 1:20
 y <- x + rnorm(20, 0, 2)  # True relationship is linear with some noise
 df <- data.frame(x = x, y = y)
 
+#overfitt exemple
 # Create three plots to show different levels of fitting
 p1 <- ggplot(df, aes(x = x, y = y)) +
   geom_point(color = "black", size = 3) +
