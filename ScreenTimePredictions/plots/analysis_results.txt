@@ -1,0 +1,38 @@
+Data Analysis Results
+==================================================
+
+1. Gender Distribution:
+Gender
+Male      364
+Female    336
+Name: count, dtype: int64
+
+2. Screen Time Statistics by Gender:
+        count      mean       std  min    25%  50%    75%   max
+Gender                                                         
+Female  336.0  5.261310  2.980182  1.0  2.775  4.9  7.225  12.0
+Male    364.0  5.283242  3.152046  1.0  2.400  4.8  7.500  11.9
+
+3. Correlation Analysis:
+Apps vs Screen Time correlation: 0.95
+
+4. Age Statistics:
+count    700.000000
+mean      38.482857
+std       12.012916
+min       18.000000
+25%       28.000000
+50%       38.000000
+75%       49.000000
+max       59.000000
+Name: Age, dtype: float64
+
+5. User Behavior Class Distribution:
+User Behavior Class
+2    146
+3    143
+4    139
+5    136
+1    136
+Name: count, dtype: int64
+

@@ -1,0 +1,29 @@
+EDA Insights:
+--------------------------------------------------
+
+1. Gender Distribution:
+Gender
+Male      364
+Female    336
+Name: count, dtype: int64
+
+2. Average Screen Time by Gender:
+Gender
+Female    5.261310
+Male      5.283242
+Name: Screen On Time (hours/day), dtype: float64
+
+3. Correlation between Apps and Screen Time: 0.95
+
+4. Screen Time Statistics:
+count    700.000000
+mean       5.272714
+std        3.068584
+min        1.000000
+25%        2.500000
+50%        4.900000
+75%        7.400000
+max       12.000000
+Name: Screen On Time (hours/day), dtype: float64
+
+5. Gender Screen Time Difference (t-test p-value): 0.9248
