@@ -1,0 +1,41 @@
+Classification Analysis Results
+==================================================
+
+1. Model Accuracies:
+Logistic Regression: 1.0000
+Decision Tree: 1.0000
+Random Forest: 1.0000
+SVM: 1.0000
+KNN: 1.0000
+
+2. Best Model: Logistic Regression
+Accuracy: 1.0000
+
+3. Detailed Classification Report for Best Model:
+              precision    recall  f1-score   support
+
+           1       1.00      1.00      1.00        27
+           2       1.00      1.00      1.00        29
+           3       1.00      1.00      1.00        34
+           4       1.00      1.00      1.00        27
+           5       1.00      1.00      1.00        23
+
+    accuracy                           1.00       140
+   macro avg       1.00      1.00      1.00       140
+weighted avg       1.00      1.00      1.00       140
+
+4. Feature Importance (Random Forest):
+Number of Apps Installed: 0.2380
+App Usage Time (min/day): 0.2361
+Data Usage (MB/day): 0.2096
+Battery Drain (mAh/day): 0.1928
+Screen On Time (hours/day): 0.1207
+Age: 0.0023
+Gender: 0.0004
+
+5. Cross-validation Scores:
+Logistic Regression: 1.0000 (+/- 0.0000)
+Decision Tree: 0.9982 (+/- 0.0071)
+Random Forest: 1.0000 (+/- 0.0000)
+SVM: 1.0000 (+/- 0.0000)
+KNN: 0.9982 (+/- 0.0071)

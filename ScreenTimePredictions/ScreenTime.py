@@ -12,11 +12,23 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 from scipy.cluster.hierarchy import dendrogram, linkage
 
+# Get the current directory (where the script is located)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Create directories if they don't exist (in the same directory as the script)
+plots_dir = os.path.join(current_dir, 'plots')
+analysis_dir = os.path.join(current_dir, 'analysis')
+
+# Create directories if they don't exist
+for directory in [plots_dir, analysis_dir]:
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print(f"Created directory: {directory}")
+
 # Set style
 plt.style.use('default')
 
 # Load the dataset
-current_dir = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(current_dir, 'user_behavior_dataset.csv')
 df = pd.read_csv(csv_path)
 print(df.columns)
@@ -26,7 +38,7 @@ plt.figure(figsize=(10, 6))
 gender_counts = df['Gender'].value_counts()
 plt.pie(gender_counts, labels=gender_counts.index, autopct='%1.1f%%')
 plt.title('Gender Distribution')
-#plt.savefig('1_gender_distribution.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '1_gender_distribution.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -40,7 +52,7 @@ sns.barplot(x=device_counts.values, y=device_counts.index)
 plt.title('Top 10 Device Models')
 plt.xlabel('Count')
 plt.tight_layout()
-#plt.savefig('2_device_models_distribution.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '2_device_models_distribution.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -50,7 +62,7 @@ sns.scatterplot(data=df, x='Number of Apps Installed', y='Screen On Time (hours/
 plt.title('Number of Apps vs Screen Time')
 plt.xlabel('Number of Apps Installed')
 plt.ylabel('Screen Time (hours/day)')
-#plt.savefig('3_apps_vs_screentime.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '3_apps_vs_screentime.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -62,7 +74,7 @@ plt.figure(figsize=(8, 6))
 sns.boxplot(data=df, x='Gender', y='Screen On Time (hours/day)')
 plt.title('Screen Time Distribution by Gender')
 plt.ylabel('Screen Time (hours/day)')
-#plt.savefig('4_screentime_by_gender.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '4_screentime_by_gender.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -75,7 +87,7 @@ sns.scatterplot(data=df, x='Age', y='Screen On Time (hours/day)', hue='Gender', 
 plt.title('Screen Time vs Age (Colored by Gender)')
 plt.xlabel('Age')
 plt.ylabel('Screen Time (hours/day)')
-#plt.savefig('5_age_screentime_gender.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '5_age_screentime_gender.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -85,7 +97,7 @@ sns.scatterplot(data=df, x='App Usage Time (min/day)', y='Screen On Time (hours/
 plt.title('App Usage Time vs Screen Time')
 plt.xlabel('App Usage Time (minutes/day)')
 plt.ylabel('Screen Time (hours/day)')
-#plt.savefig('6_app_usage_vs_screentime.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '6_app_usage_vs_screentime.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -96,7 +108,7 @@ sns.barplot(x=behavior_counts.index, y=behavior_counts.values)
 plt.title('Distribution of User Behavior Classes')
 plt.xticks(rotation=45)
 plt.tight_layout()
-#plt.savefig('7_user_behavior_distribution.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '7_user_behavior_distribution.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -106,7 +118,7 @@ sns.histplot(data=df, x='Age', bins=30, kde=True)
 plt.title('Age Distribution')
 plt.xlabel('Age')
 plt.ylabel('Count')
-#plt.savefig('8_age_distribution.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '8_age_distribution.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
@@ -119,12 +131,12 @@ plt.figure(figsize=(12, 10))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
 plt.title('Correlation Matrix')
 plt.tight_layout()
-#plt.savefig('9_correlation_matrix.png', bbox_inches='tight', dpi=300)
+plt.savefig(os.path.join(plots_dir, '9_correlation_matrix.png'), bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
 # Save summary statistics and insights
-with open('analysis_results.txt', 'w') as f:
+with open(os.path.join(analysis_dir, 'analysis_results.txt'), 'w') as f:
     f.write("Data Analysis Results\n")
     f.write("=" * 50 + "\n\n")
     
@@ -199,7 +211,7 @@ feature_importance = feature_importance.sort_values('importance', ascending=Fals
 
 sns.barplot(x='importance', y='feature', data=feature_importance)
 plt.title('Feature Importance in Predicting Screen Time')
-plt.savefig('10_feature_importance.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '10_feature_importance.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -210,7 +222,7 @@ plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--', lw=2
 plt.xlabel('Actual Screen Time')
 plt.ylabel('Predicted Screen Time')
 plt.title('Actual vs Predicted Screen Time')
-plt.savefig('11_prediction_scatter.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '11_prediction_scatter.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -222,12 +234,12 @@ plt.xlabel('Predicted Screen Time')
 plt.ylabel('Residuals')
 plt.axhline(y=0, color='r', linestyle='--')
 plt.title('Residual Plot')
-plt.savefig('12_residual_plot.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '12_residual_plot.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
 # Save model results
-with open('random_forest_results.txt', 'w') as f:
+with open(os.path.join(analysis_dir, 'random_forest_results.txt'), 'w') as f:
     f.write("Random Forest Model Results\n")
     f.write("=" * 50 + "\n\n")
     
@@ -295,7 +307,7 @@ plt.xlabel('k')
 plt.ylabel('Silhouette Score')
 plt.title('Silhouette Score for Optimal k')
 plt.tight_layout()
-plt.savefig('13_kmeans_optimal_k.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '13_kmeans_optimal_k.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -314,7 +326,7 @@ plt.xlabel('Standardized Screen Time')
 plt.ylabel('Standardized App Usage Time')
 plt.title('K-means Clusters')
 plt.colorbar(scatter)
-plt.savefig('14_kmeans_clusters.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '14_kmeans_clusters.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -326,7 +338,7 @@ dendrogram(linkage_matrix)
 plt.title('Hierarchical Clustering Dendrogram')
 plt.xlabel('Sample Index')
 plt.ylabel('Distance')
-plt.savefig('15_hierarchical_clustering.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '15_hierarchical_clustering.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -341,12 +353,12 @@ for column in cluster_means_scaled.columns:
 
 sns.heatmap(cluster_means_scaled, annot=True, cmap='coolwarm', center=0)
 plt.title('Cluster Characteristics (Standardized Values)')
-plt.savefig('16_cluster_characteristics.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(plots_dir, '16_cluster_characteristics.png'), dpi=300, bbox_inches='tight')
 plt.show()
 plt.close()
 
 # Save clustering results
-with open('clustering_results.txt', 'w') as f:
+with open(os.path.join(analysis_dir, 'clustering_results.txt'), 'w') as f:
     f.write("Clustering Analysis Results\n")
     f.write("=" * 50 + "\n\n")
     

@@ -1,0 +1,26 @@
+Model Comparison Results
+==================================================
+
+1. Accuracy Ranking:
+1. Logistic Regression: 1.0000
+2. Decision Tree: 1.0000
+3. Random Forest: 1.0000
+4. SVM: 1.0000
+5. KNN: 1.0000
+
+2. Cross-validation Performance:
+Logistic Regression:
+  Mean CV Score: 1.0000
+  Standard Deviation: 0.0000
+Decision Tree:
+  Mean CV Score: 0.9982
+  Standard Deviation: 0.0036
+Random Forest:
+  Mean CV Score: 1.0000
+  Standard Deviation: 0.0000
+SVM:
+  Mean CV Score: 1.0000
+  Standard Deviation: 0.0000
+KNN:
+  Mean CV Score: 0.9982
+  Standard Deviation: 0.0036
