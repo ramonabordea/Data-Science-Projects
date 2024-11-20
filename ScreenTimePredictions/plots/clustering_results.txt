@@ -1,0 +1,54 @@
+Clustering Analysis Results
+==================================================
+
+1. K-means Clustering
+Optimal number of clusters (k): 4
+Silhouette score: 0.3536
+
+2. Cluster Sizes:
+Cluster 0: 137 users
+Cluster 1: 140 users
+Cluster 2: 272 users
+Cluster 3: 151 users
+
+3. Cluster Characteristics (Mean Values):
+         App Usage Time (min/day)  Screen On Time (hours/day)  Battery Drain (mAh/day)  Number of Apps Installed  Data Usage (MB/day)        Age
+Cluster                                                                                                                                         
+0                      540.686131                   10.098540              2698.321168                 89.167883          1971.138686  38.065693
+1                      100.157143                    2.441429               675.871429                 23.764286           327.628571  48.621429
+2                      317.533088                    5.965809              1819.264706                 60.231618          1030.977941  39.011029
+3                      101.490066                    2.270861               718.403974                 23.516556           360.794702  28.509934
+
+4. Cluster Profiles:
+
+Cluster 0 Profile:
+App Usage Time (min/day): 540.69
+Screen On Time (hours/day): 10.10
+Battery Drain (mAh/day): 2698.32
+Number of Apps Installed: 89.17
+Data Usage (MB/day): 1971.14
+Age: 38.07
+
+Cluster 1 Profile:
+App Usage Time (min/day): 100.16
+Screen On Time (hours/day): 2.44
+Battery Drain (mAh/day): 675.87
+Number of Apps Installed: 23.76
+Data Usage (MB/day): 327.63
+Age: 48.62
+
+Cluster 2 Profile:
+App Usage Time (min/day): 317.53
+Screen On Time (hours/day): 5.97
+Battery Drain (mAh/day): 1819.26
+Number of Apps Installed: 60.23
+Data Usage (MB/day): 1030.98
+Age: 39.01
+
+Cluster 3 Profile:
+App Usage Time (min/day): 101.49
+Screen On Time (hours/day): 2.27
+Battery Drain (mAh/day): 718.40
+Number of Apps Installed: 23.52
+Data Usage (MB/day): 360.79
+Age: 28.51

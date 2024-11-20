@@ -1,0 +1,18 @@
+Random Forest Model Results
+==================================================
+
+1. Model Performance Metrics:
+R-squared Score: 0.9331
+Root Mean Squared Error: 0.7747
+Mean Absolute Error: 0.6075
+
+2. Feature Importance:
+Battery Drain (mAh/day): 0.3501
+App Usage Time (min/day): 0.2655
+Data Usage (MB/day): 0.2046
+Number of Apps Installed: 0.1715
+Age: 0.0083
+
+3. Dataset Split:
+Training set size: 560
+Testing set size: 140
