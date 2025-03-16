@@ -10,6 +10,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -62,6 +63,17 @@ model.fit(X_train, y_train, epochs=20, batch_size=16, validation_data=(X_test, y
 y_pred = model.predict(X_test)
 y_pred_inv = scaler.inverse_transform(y_pred)
 y_test_inv = scaler.inverse_transform(y_test.reshape(-1,1))
+
+# Evaluation Metrics
+mae = mean_absolute_error(y_test_inv, y_pred_inv)
+mse = mean_squared_error(y_test_inv, y_pred_inv)
+rmse = np.sqrt(mse)
+mape = np.mean(np.abs((y_test_inv - y_pred_inv) / y_test_inv)) * 100
+
+print(f"Mean Absolute Error (MAE): {mae}")
+print(f"Mean Squared Error (MSE): {mse}")
+print(f"Root Mean Squared Error (RMSE): {rmse}")
+print(f"Mean Absolute Percentage Error (MAPE): {mape}%")
 
 # Plot results
 plt.figure(figsize=(12,6))
